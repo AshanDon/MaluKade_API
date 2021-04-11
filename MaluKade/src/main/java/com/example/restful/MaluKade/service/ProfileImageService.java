@@ -2,17 +2,18 @@ package com.example.restful.MaluKade.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.restful.MaluKade.exception.ResourceNotFoundException;
 import com.example.restful.MaluKade.model.Profile;
 import com.example.restful.MaluKade.model.ProfileImage;
 import com.example.restful.MaluKade.repository.ProfileImageRepository;
@@ -53,16 +54,38 @@ public class ProfileImageService {
 		}
 	}
 	
-//	public ResponseEntity<Respones> getImageByProId(long proId){
-//		
-//		try {
-//			Profile profile = profileRepository.findById(proId).get();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			
-//		}
-//		
-//	}
+	/**
+	 * @param Long proId
+	 * @return ResponseEntity<Object>
+	 */
+	public ResponseEntity<Object> getImageByProId(long proId){
+		
+		try {
+			Profile profile = profileRepository.findById(proId).get();
+			
+			if (profile != null) {
+				
+				ProfileImage retrievedImage = imageRepository.getProfileImageByProfileId(profile.getId());
+				
+				if(retrievedImage != null) {
+					
+					retrievedImage.setImageByte(decompressBytes(retrievedImage.getImageByte()));
+					
+					return new ResponseEntity<Object>(retrievedImage,HttpStatus.OK);
+				} else {
+					return null;
+				}
+				
+			} else {
+				Respones respones = new Respones(new Date(),"404","Not Found","Profile not found on"+proId);
+				return new ResponseEntity<Object>(respones,HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 	
 	/**
 	 * compress the image bytes before storing it in the database
