@@ -4,8 +4,8 @@ The MaluKade API project built on top of Spring Boot, Spring Security, Spring MV
 
 Features
 
-  RESTful routing
-  Models with proper relationships
-  Controllers/Models etc with proper separation of concerns
-  JWT Authentication
+  RESTful routing | 
+  Models with proper relationships |
+  Controllers/Models etc with proper separation of concerns |
+  JWT Authentication |
   RESTful errors
