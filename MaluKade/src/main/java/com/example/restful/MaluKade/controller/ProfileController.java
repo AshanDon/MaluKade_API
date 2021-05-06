@@ -1,6 +1,7 @@
 package com.example.restful.MaluKade.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.websocket.server.PathParam;
 
@@ -59,5 +60,15 @@ public class ProfileController {
 	@GetMapping("/profile/active/all")
 	public List<Profile> findAllActiveProfile(){
 		return profileService.getAllActiveProfile();
+	}
+	
+	@GetMapping("/profile/register/email")
+	public Map<String, Boolean> checkAvailableEmail(@PathParam(value = "email") String email){
+		return profileService.checkEmail(email);
+	}
+	
+	@GetMapping("/profile/register/user_name")
+	public Map<String,Boolean> checkAvailableUserName(@PathParam(value = "userName") String userName){
+		return profileService.checkUserName(userName);
 	}
 }
