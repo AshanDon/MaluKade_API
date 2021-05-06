@@ -22,5 +22,12 @@ public interface ProfileRepository extends JpaRepository<Profile, Long>{
 	
 	@Query(value = "SELECT * FROM profile p WHERE p.user_name =:userName AND p.active_Status = true",nativeQuery = true)
 	public Profile getProfileByUserName(@Param(value = "userName") String userName);
+	
+	@Query(value = "SELECT * FROM profile p WHERE p.email =:email", nativeQuery = true)
+	public Profile getAvailableEmail(@Param(value = "email") String email); 
+	
+	@Query(value = "SELECT * FROM profile p WHERE p.user_name =:userName",nativeQuery = true)
+	public Profile getAvailableUserName(@Param(value = "userName") String userName);
+	
 
 }

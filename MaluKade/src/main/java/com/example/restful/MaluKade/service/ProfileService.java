@@ -1,7 +1,9 @@
 package com.example.restful.MaluKade.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +147,38 @@ public class ProfileService {
 			ex.printStackTrace();
 			return null;
 		}
+	}
+	
+	/**
+	 * @param String email
+	 * @return Map<String, Boolean>
+	 */
+	public Map<String, Boolean> checkEmail(String email){
+		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		
+		Profile result = profileRepository.getAvailableEmail(email);
+		
+		if(result != null) {
+			resultMap.put("Result",false);
+		} else {
+			resultMap.put("Result",true);
+		}
+		
+		return resultMap;
+	}
+	
+	public Map<String, Boolean> checkUserName(String userName){
+		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		
+		Profile result = profileRepository.getAvailableUserName(userName);
+		
+		if(result != null) {
+			resultMap.put("Result",false);
+		} else {
+			resultMap.put("Result",true);
+		}
+		
+		return resultMap;
 	}
 }
 
